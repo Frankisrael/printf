@@ -1,0 +1,2 @@
+The printf project is a collaboration between Frank Israel and Dorathy Udo. We are ALX students working on a team project were a function named "_printf" imitates the actual "printf" command located in the stdio.h library. It contains some of the basic features and functions found in the manual 3 of "printf"._printf() is a function that performs formatted output conversion and print data. It has several prototypes which will added in our header files and would be referenced throughout our project files on C.
+

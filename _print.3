@@ -1,0 +1,105 @@
+.\" Manpage for _printf
+.\" Contact ecokeke21@gmail.com or evbodiovo@gmail.com to report errors and bugs
+.TH "_PRINTF MAN PAGE" 3 "2022-10-17" "GNU" "Linux Programmer's Manual"
+.SH NAME
+_printf \- renders formatted input data to the standard output
+.SH SYNOPSIS
+int _printf(const char *format, ...);
+.SH DESCRIPTION
+The _printf function renders formatted data from the C standard input to the C standard output.
+It takes one mandatory string argument, from which formatting specifiers are extracted and acted upon.
+The function can take a variable number of arguments, and map specifiers to their respective arguments in a sequential order.
+The formatting options cover non-custom C data types, as well as custom data types. [see SPECIFIERS]
+The '%' symbol triggers a directive to extract data in possibly explicitly specified formats.
+The succeeding specifications include 4 optional preprocessing formatting in the following order: zero or more flags [see FLAGS], a field width [see FIELD WIDTH], a precision [see PRECISION] and a length modifier [see LENGTH MODIFIER].
+A valid obligatory data type specifier follows all optional preprocessing specifiers. [see SPECIFIERS]
+.SH FLAGS
+.IP '#'
+Prepends '0x' prefix to hexadecimal number conversion result for 'x' and 'X'.
+Prepends '0' prefix to octal number convesion result for 'o'.
+.IP '\ '
+Leaves a blank space before a positive signed number.
+.IP '+'
+Places a sign before a number.
+.IP '-'
+Left adjusts a value within its field boundary. A negative field width flag.
+.IP '0'
+Left pads a number with zeros.
+
+.SH FIELD WIDTH
+Reserves the minimum space for a number. This adds space for the justification of numbers, as specified by the user. The field width directive is passed as a decimal number. If the argument has fewer digits, extra space is added during formatting. An asterisk may be used to indicate precision, in this case, the value is supplied by an int argument.
+
+.SH PRECISION
+Implied by a '.', the precision directive sets the decimal precision of a number to the value specified after '.'
+If no value is specified, then the precision is interpreted as zero.
+An asterisk may be used to indicate precision, in this case, the value is supplied by an int argument.
+
+.SH LENGTH MODIFIER
+.IP 'h'
+Makes an unsigned conversion from the 'int' data type to the 'unsigned short' data type.
+If the argument holds a value larger than the capacity of a short int, the highest possible value for an unsigned short, as specified by the users operating system, is printed.
+.IP 'l'
+Makes an unsigned conversion to the 'unsigned long' data type.
+If the argument holds a value larger than the capacity of an unsigned long, the highest possible value for an unsigned long, as specified by the users operating system, is printed.
+
+.SH SPECIFIERS
+The _printf function has various specifiers for custom and non-custom C data types.
+
+The non-custom specifiers handled by the program are:
+
+.IP 'd'
+A signed decimal of size 'int', as specified by the user's operating system.
+.IP 'i'
+A signed integer of size 'int', as specified by the user's operating system.
+.IP 'u'
+An unsigned integer of data type 'unsigned int', and an operating-system-specific size.
+.IP 'c'
+A single character is rendered to the standard output.
+.IP 's'
+This renders a string argument to the standard output.
+.IP 'o'
+An octal format. A conversion to base 8 is performed on a number of type unsigned int, and the result is printed out.
+.IP 'x'
+A hexadecimal format. A conversion to base 16 is performed on an unsigned integer, and the resulting hexadecimal format is printed out, with the hex letters rendered in lowercase.
+.IP 'X'
+A hexadecimal format similar to that rendered by the specifier 'x', but with the hex letters in uppercase instead.
+.IP 'p'
+A long unsigned hexadecimal representation of an address in memory, prefixed by an '0x'.
+The hex letters are rendered in lowercase.
+.IP '%'
+An escape directive for the '%' symbol. A double percent symbol (%%) terminates the formatting processing for that iteration, and writes a single percent symbol (%) to the C standard output.
+No argument is pulled from the argument list.
+
+The custom specifiers handled by the program are:
+
+.IP 'b'
+The binary representation of numeric data. A base 2 conversion is performed on a number of type 'unsigned int', and the result is rendered to the standard output.
+.IP 'S'
+A custom format to render non-printable ASCII characters as '\x'.
+Non-printable in this context refers to any character with an ASCII value greater than 126, or less than 32.
+.IP 'r'
+Prints a string argument in reverse. A string argument is extracted from the the argument list, and its terminating null byte is removed.
+The characters are reversed, and a new null terminator is appended to the string, which is later rendered to the standard output.
+.IP 'R'
+Encodes a string to ROT13.
+A string argument is extracted from the argument list, and the letters are encrypted by replacing each letter by its partner 13.
+
+.SH RETURN VALUE
+A successful call to the _printf function returns a count of the characters rendered to the standard output.
+.SH ERRORS
+Failure to reproduce data returns -1 to the function's caller.
+.SH STANDARDS
+This function conforms to the ANSI X3.159-1989 (``ANSI C89''), ISO/IEC 9899:1999 and the POSIX.1 standards.
+In as much as the function may be successfully called with other standards, no such guarantees are provided as at its release date.
+.SH BUGS
+Multibyte characters may produce undefined behaviours as the _printf function v1.0 makes no provision to handle such arguments.
+.SH EXAMPLE
+To render a string containing 2 variables 'name' and 'age' to the standard output, where 'name' is a string literal with the data ("Chee-Ovy") and 'age', an integer with a value (5):
+_printf("My name is %s, and I am %d years old.", name, age);
+Expected output:
+My name is Chee-Ovy, and I am 5 years old.
+.SH AUTHORS
+Chee-zaram Okeke (ecokeke21@gmail.com)
+Ovy Evbodi (evbodiovo@gmail.com)
+.SH SEE ALSO
+printf(3)
